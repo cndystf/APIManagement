@@ -1,0 +1,352 @@
+swagger: "2.0"
+info:
+  description: "These are list of your API"
+  version: "1.0.0"
+  title: "API Documentation for Challenge 6"
+host: "localhost:5000"
+basePath: "/api"
+paths:
+  /user/register:
+    post:
+      summary: "Register"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+            required:
+            - "username"
+            - "password"
+            - "email"
+            - "role"
+            properties:
+              username:
+                type: "string"
+              password:
+                type: "string"
+              email:
+                type: "string"
+              role:
+                type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            items:
+              type: "object"
+              properties:
+                success:
+                  type: "boolean"
+                  default: true
+                message:
+                  type: "string"
+                data:
+                  type: "object"
+                  properties:
+                    token:
+                      type: "string"
+                error:
+                  type: "string"
+        "400":
+          description: "Server Error"
+
+  /user/reg-admin:
+    post:
+      summary: "Register for Admin"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+            required:
+            - "username"
+            - "password"
+            - "email"
+            - "role"
+            properties:
+              username:
+                type: "string"
+              password:
+                type: "string"
+              email:
+                type: "string"
+              role:
+                type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            items:
+              type: "object"
+              properties:
+                success:
+                  type: "boolean"
+                  default: true
+                message:
+                  type: "string"
+                data:
+                  type: "object"
+                  properties:
+                    token:
+                      type: "string"
+                error:
+                  type: "string"
+        "400":
+          description: "Server Error"
+      security:
+        - bearerAuth: []
+
+  /user/login:
+    post:
+      summary: "Login"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+            required:
+            - "username"
+            - "password"
+            properties:
+              username:
+                type: "string"
+              password:
+                type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            items:
+              type: "object"
+              properties:
+                success:
+                  type: "boolean"
+                  default: true
+                message:
+                  type: "string"
+                data:
+                  type: "object"
+                  properties:
+                    token:
+                      type: "string"
+                error:
+                  type: "string"
+        "400":
+          description: "Server Error"
+
+  /user/profile:
+    get:
+      summary: "About User"
+      description: ""
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            items:
+              type: "object"
+              properties:
+                success:
+                  type: "boolean"
+                  default: true
+                message:
+                  type: "string"
+                data:
+                  type: "object"
+                error:
+                  type: "string"
+        "400":
+          description: "Server Error"
+      security:
+        - bearerAuth: []
+
+  /car/list:
+    get:
+      summary: "List of Car"
+      description: ""
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/CarResponse"
+        "400":
+          description: "Server Error"
+      security:
+        - bearerAuth: []
+
+  /car/find-by-id:
+    post:
+      summary: "Find Car By ID"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+            required:
+            - "id"
+            properties:
+              id:
+                type: "integer"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/CarResponse"
+        "400":
+          description: "Server Error"
+      security:
+        - bearerAuth: []
+
+  /car/create:
+    post:
+      summary: "Create Car"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+            required:
+            - "name"
+            - "type"
+            - "price"
+            properties:
+              name:
+                type: "string"
+              type:
+                type: "string"
+              price:
+                type: "integer"
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            items:
+              $ref: "#/definitions/CarResponse"
+        "400":
+          description: "Server Error"
+
+  /car/update:
+    put:
+      summary: "Update Car"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+            required:
+            - "id"
+            - "name"
+            - "type"
+            - "price"
+            properties:
+              id:
+                type: "integer"
+              name:
+                type: "string"
+              type:
+                type: "string"
+              price:
+                type: "integer"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            items:
+              $ref: "#/definitions/CarResponse"
+        "400":
+          description: "Server Error"
+      security:
+        - bearerAuth: []
+
+  /car/delete:
+    delete:
+      summary: "Delete car"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+            required:
+            - "id"
+            properties:
+              id:
+                type: "integer"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            items:
+              $ref: "#/definitions/CarResponse"
+        "400":
+          description: "Server Error"
+      security:
+        - bearerAuth: []
+
+securityDefinitions:
+  bearerAuth:     
+    name: Authorization       # arbitrary name for the security scheme
+    type: apiKey
+    scheme: bearer
+    in: header
+
+definitions:
+  CarResponse:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+        default: true
+      message:
+        type: "string"
+      data:
+        type: "object"
+        properties:
+          name:
+            type: "string"
+          type:
+            type: "string"
+          price:
+            type: "integer"
+          createdAt:
+            type: "date"
+          updatedAt:
+            type: "date"
+      error:
+        type: "string"
